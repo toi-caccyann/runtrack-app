@@ -1,0 +1,243 @@
+/* ===================================================
+   1. アプリ全体の基本デザイン
+=================================================== */
+body {
+    background-color: #0f172a; /* ダークネイビー */
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: #f8fafc;
+}
+
+/* アプリ全体のボックス */
+.tracker-app {
+    background-color: #1e293b; /* 少し明るめのダークグレー */
+    width: 100%;
+    max-width: 70%;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+    color: #38bdf8; /* スカイブルー */
+    font-size: 26px;
+    margin-top: 0;
+    margin-bottom: 25px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+/* ===================================================
+   2. データ表示エリア（上部3つのボックス）
+=================================================== */
+.display-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.data-box {
+    flex: 1;
+    background-color: #0f172a;
+    padding: 15px 10px;
+    border-radius: 12px;
+    border: 1px solid #334155;
+}
+
+.label {
+    display: block;        /* 横いっぱいに広げてから */
+    text-align: center;    /* 文字を中央に寄せる */
+    font-size: 13px;
+    color: #94a3b8;        /* 少し薄めのグレー */
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+#time-display, #distance-display, #speed-display {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #f8fafc;
+}
+
+/* ===================================================
+   3. 操作ボタンエリア（グリッド配置）
+=================================================== */
+.button-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2列に分ける */
+    gap: 12px;
+}
+
+button {
+    padding: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+/* メインボタン群（スタート、ストップ、保存する） */
+#start-btn, #stop-btn, #save-btn {
+    background-color: #6e8bdd;
+    color: white;
+}
+#start-btn:hover, #stop-btn:hover, #save-btn:hover { 
+    background-color: #406de9; 
+}
+
+/* リセットボタン（渋めのグレー） */
+#clear-btn {
+    background-color: #475569;
+    color: white;
+}
+#clear-btn:hover { 
+    background-color: #334155; 
+}
+
+/* ===================================================
+   4. 履歴を見るボタン（下部の白い独立ボタン）
+=================================================== */
+.storage-btn-wrap {
+    text-align: center;
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+#storage-btn, 
+#simulation-btn {
+    background-color: #ffffff;   
+    color: #1e293b;
+    width: 160px;       /* 横幅を統一（例: 160px） */
+    height: 45px;       /* 高さも統一（例: 45px） */
+    padding: 15px;
+    transition: all 0.2s; /* 前回の滑らかなアニメーション */
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+}
+
+#storage-btn:hover {
+    background-color: #a0cefc;
+}
+
+#simulation-btn:hover {
+    background-color: #a0cefc;
+} 
+
+/* ===================================================
+   5. 履歴表示ポップアップ（モーダル）
+=================================================== */
+.modal-overlay {
+    display: none;       /* 【最重要】最初は画面から完全に隠しておく */
+    position: fixed;     /* 画面に固定 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* うっすら透ける黒 */
+    z-index: 999;        /* 最前面に浮かび上がらせる */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    width: 85%;
+    max-width: 400px;    /* スマホで見てもはみ出さないサイズ */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+#history-log-area {
+    max-height: 250px;   /* 履歴が増えたら箱の中でスクロール */
+    overflow-y: auto;
+    margin: 20px 0;
+    text-align: left;    /* 履歴の一覧は左寄せ */
+}
+
+#close-modal-btn {
+    background-color: #666;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+#close-modal-btn:hover {
+    background-color: #444;
+}
+
+/* timer.css の一番最後に追加してください */
+@media (max-width: 480px) {
+    body {
+        padding: 75px 10px 20px 10px; /* 上下にヘッダー分の余白、左右に10pxの隙間 */
+        box-sizing: border-box;
+    }
+    .tracker-app {
+        max-width: 100%;  /* スマホの時は70%ではなく画面幅いっぱいにする */
+        padding: 20px 15px;
+    }
+    .display-container {
+        flex-direction: column; /* 3つのデータボックスを縦並びにしてスマホで見やすく */
+        gap: 10px;
+    }
+    .button-container {
+        grid-template-columns: 1fr 1fr; /* ボタンを2列×2行にして押しやすく */
+        gap: 10px;
+    }
+}
+
+/* スタート中はアプリ全体の枠が呼吸するように光る */
+.tracker-app.is-recording {
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    animation: recordingGlow 1.6s ease-in-out infinite;
+}
+@keyframes recordingGlow {
+    0%, 100% { box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    50% { box-shadow: 0 10px 30px rgba(239,68,68,0.35); }
+}
+
+/* 計測中は時間表示の横に赤いREC丸が点滅 */
+.tracker-app.is-recording #time-display::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 6px;
+    border-radius: 50%;
+    background: #ef4444;
+    animation: blink 1s ease-in-out infinite;
+    vertical-align: middle;
+}
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+}
+
+/* 距離・速度が更新されるたびピクッと強調 */
+#distance-display.updated, #speed-display.updated {
+    animation: pop 0.3s ease;
+}

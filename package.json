@@ -1,0 +1,14 @@
+{
+  "name": "runtrack-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ランニング記録・カロリー計算Webアプリ（学習用プロジェクト）",
+  "scripts": {
+    "dev": "http-server -p 8000 -c-1",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "eslint": "^10.8.0",
+    "http-server": "^14.1.1"
+  }
+}

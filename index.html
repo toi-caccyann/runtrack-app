@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUN TRACKER - ホーム</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <div id="header-area"></div>
+
+    <!-- <header class="app-header">
+        <div class="header-logo"> 🌐RUN TRACKER</div>
+        <nav class="header-nav">
+            <a href="home.html" class="active">ホーム</a>
+            <a href="timer.html" class="active">計測</a>
+            <a href="simulation.html" class="active">シミュレーター</a>
+            <a href="profile.html" class="active">プロフィール</a>
+        </nav>
+    </header> -->
+
+    <main class="home-container">
+
+        <section class="welcome-section">
+            <h1 id="welcome-message">こんにちは、ランナーさん！</h1>
+            <p class="motivational-text">今日も自分のペースで、楽しく走りましょう！</p>
+            <div class="quick-start-box">
+                <a href="timer.html" class="start-dash-btn">🏃‍♂️ 今すぐ計測を始める</a>
+            </div>
+        </section>
+
+        <section class="dashboard-grid">
+            
+            <div class="info-card">
+                <h2>前回のランニング</h2>
+                <div class="card-body">
+                    <div class="stat-item">
+                        <span class="stat-label">走行距離</span>
+                        <span class="stat-value" id="last-distance">0.00 <small>km</small></span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">走行時間</span>
+                        <span class="stat-value" id="last-time">00:00:00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card highlight-card">
+                <h2>1ヶ月継続時の予測ポテンシャル</h2>
+                <div class="card-body">
+                    <div class="stat-item">
+                        <span class="stat-label">想定減量目標</span>
+                        <span class="stat-value" id="potential-weight">0.0 <small>kg</small></span>
+                    </div>
+                </div>
+                <p class="card-footer-text">※前回の走行データと体重から自動試算</p>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <h2>これまでの累計実績</h2>
+            <div class="stats-total-grid">
+                <div class="total-box">
+                    <span class="total-label">総走行距離</span>
+                    <span class="total-value" id="total-distance">0.00 <small>km</small></span>
+                </div>
+            </div>
+        </section>
+
+        <section class="recent-history-section">
+            <h2>最近のランニング履歴（直近3件）</h2>
+            <div id="home-history-list">
+                <p class="empty-message">保存された履歴はまだありません。</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="calorie-calc.js"></script>
+    <script src="home.js"></script>
+    <script src="header.js"></script>
+</body>
+</html>

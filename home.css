@@ -1,0 +1,394 @@
+/* ==========================================
+   🎨 1. 全体共通のスタイル（ベース）
+   ========================================== */
+body {
+    background-color: #0f172a; /* 落ち着いたダークネイビー */
+    color: #f8fafc;            /* ほぼ白に近いグレー（目に優しい） */
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    padding-top: 75px; /* ヘッダーが上部に固定されるため、その分の余白 */
+    overflow-x: hidden;
+    width: 100vw;
+     background: 
+        radial-gradient(circle at 20% 20%, rgba(56,189,248,0.15), transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(129,140,248,0.12), transparent 45%),
+        #0f172a;
+    background-size: 200% 200%;
+    animation: bgFloat 18s ease-in-out infinite;
+}
+
+@keyframes bgFloat {
+    0%, 100% { background-position: 0% 0%, 100% 100%, 0 0; }
+    50% { background-position: 30% 20%, 70% 60%, 0 0; }
+}
+
+/* ==========================================
+   📱 スマートフォン向け（画面幅480px以下）の調整
+   ========================================== */
+@media (max-width: 480px) {
+    /* ヘッダー全体の左右の余白を少し削る */
+    .app-header {
+        padding: 0 8px;
+        height: 55px;
+    }
+
+    /* ロゴの文字サイズを少し小さくしてスペースを確保 */
+    .header-logo {
+        font-size: 14px;
+        letter-spacing: -0.5px;
+        margin-right: 5px;
+    }
+
+    /* ナビゲーションのリンク同士の間隔を狭くする */
+    .header-nav {
+        gap: 2px; 
+        flex: 1;
+        justify-content: flex-start;
+        overflow-x: auto;              /* 画面に収まらない分は横スクロールできるように */
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;         /* Firefoxでスクロールバーを隠す */
+    }
+
+    /* Chrome/Safariでスクロールバーを隠す */
+    .header-nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* 各メニューボタンの文字サイズと余白をスマホ用に最適化 */
+    .header-nav a {
+        font-size: 11px;      /* 文字を少し小さく */
+        padding: 6px 6px;     /* 左右の余白を詰める */
+        border-radius: 6px;
+        white-space: nowrap;  /* 絶対に途中で改行させない */
+        flex-shrink: 0;       /* スクロール領域内でリンクが潰れて読めなくなるのを防ぐ */
+    }
+}
+
+/* ==========================================
+   🌐 2. 共通ヘッダー（ナビゲーション）
+   ========================================== */
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background-color: rgba(30, 41, 59, 0.7);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    z-index: 1000; /* 他の要素より常に手前に表示 */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.header-logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: #38bdf8; /* アクセントブルー */
+    letter-spacing: 1px;
+}
+
+.header-nav {
+    display: flex;
+    gap: 15px;
+}
+
+.header-nav a {
+    color: #94a3b8; /* 落ち着いたグレー */
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+/* マウスが乗ったとき */
+.header-nav a:hover {
+    color: #38bdf8;
+    background-color: #334155;
+}
+
+/* いま開いているページのメニューを目立たせる */
+.header-nav a.active {
+    color: #0f172a;
+    background-color: #38bdf8;
+}
+
+/* ==========================================
+   🏠 3. メインレイアウト
+   ========================================== */
+.home-container {
+    max-width: 600px; /* スマホやPCで見やすい幅に制限 */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 各セクションの間隔 */
+section {
+    margin-bottom: 30px;
+}
+
+/* セクションのタイトル（h2） */
+section h2 {
+    font-size: 16px;
+    color: #94a3b8;
+    margin-bottom: 12px;
+    padding-left: 8px;
+    border-left: 4px solid #38bdf8; /* 左側に青いアクセント線 */
+}
+
+/* ==========================================
+   👋 4. ウェルカム ＆ クイックスタート
+   ========================================== */
+.welcome-section {
+    text-align: center;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    padding: 30px 20px;
+    border-radius: 16px;
+    border: 1px solid #334155;
+}
+
+#welcome-message {
+    font-size: 24px;
+    margin: 0 0 8px 0;
+    color: #ffffff;
+}
+
+.motivational-text {
+    font-size: 14px;
+    color: #94a3b8;
+    margin: 0 0 25px 0;
+}
+
+/* 今すぐ計測を始めるボタン */
+.start-dash-btn {
+    display: inline-block;
+    background-color: #38bdf8;
+    color: #0f172a;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 16px 32px;
+    border-radius: 30px; /* 丸みを持たせてスポーツアプリ感を演出 */
+    box-shadow: 0 4px 14px rgba(56, 189, 248, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.start-dash-btn:hover {
+    transform: translateY(-2px); /* 少し上に浮き上がるアニメーション */
+    box-shadow: 0 6px 20px rgba(56, 189, 248, 0.6);
+}
+
+/* ==========================================
+   📊 5. ダッシュボード（グリッド ＆ カード）
+   ========================================== */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 綺麗に2分割 */
+    gap: 15px;
+}
+
+/* スマホなど画面が狭いときは縦並びにする */
+@media (max-width: 480px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.info-card {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.info-card, .total-box, #home-history-list, .profile-app, .input-app, .tracker-app {
+    background-color: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: transform 0.25s cubic-bezier(.2,.8,.2,1), box-shadow 0.25s ease, border-color 0.25s ease;
+    animation: fadeUp 0.5s ease both;
+}
+
+.info-card:hover, .total-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -8px rgba(56,189,248,0.25);
+    border-color: rgba(56,189,248,0.4);
+}
+
+.info-card h2 {
+    font-size: 14px;
+    color: #94a3b8;
+    margin: 0 0 15px 0;
+    padding: 0;
+    border: none;
+}
+
+/* 未来予測カード（目立たせる） */
+.highlight-card {
+    border-color: #38bdf8;
+    background: linear-gradient(to bottom right, #1e293b, #111e35);
+}
+
+.dashboard-grid .info-card:nth-child(1) { animation-delay: 0.05s; }
+.dashboard-grid .info-card:nth-child(2) { animation-delay: 0.15s; }
+.stats-total-grid .total-box:nth-child(1) { animation-delay: 0.25s; }
+#home-history-list { animation-delay: 0.35s; }
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.stat-item {
+    margin-bottom: 12px;
+}
+
+.stat-label {
+    display: block;
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 2px;
+}
+
+.stat-value {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.stat-value small {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-left: 2px;
+}
+
+.card-footer-text {
+    font-size: 10px;
+    color: #64748b;
+    margin: 10px 0 0 0;
+}
+
+/* ==========================================
+   💰 6. 累計実績エリア
+   ========================================== */
+.stats-total-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.total-box {
+    background-color: #111827; /* より深い黒に近い背景 */
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+}
+
+.total-label {
+    display: block;
+    font-size: 12px;
+    color: #94a3b8;
+    margin-bottom: 5px;
+}
+
+.total-value {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* ==========================================
+   📋 7. 最近の履歴
+   ========================================== */
+#home-history-list {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.empty-message {
+    font-size: 14px;
+    color: #64748b;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.stat-value.updated, .total-value.updated {
+    animation: pop 0.4s ease;
+}
+@keyframes pop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.15); color: #38bdf8; }
+    100% { transform: scale(1); }
+}
+
+/* ===== 主要ボタンの押し心地アップ ===== */
+.start-dash-btn, #save-profile-btn, #simulation, button {
+    position: relative;
+    overflow: hidden;
+}
+
+.start-dash-btn::after, #save-profile-btn::after, #simulation::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.35) 0%, transparent 60%);
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.start-dash-btn:active::after, #save-profile-btn:active::after, #simulation:active::after {
+    opacity: 1;
+    transform: scale(1.5);
+    transition: 0s;
+}
+
+.start-dash-btn:active::after, #save-profile-btn:active::after, #simulation:active::after {
+    opacity: 1;
+    transform: scale(1.5);
+    transition: 0s;
+}
+
+.start-dash-btn {
+    animation: glowPulse 2.5s ease-in-out infinite;
+}
+@keyframes glowPulse {
+    0%, 100% { box-shadow: 0 4px 14px rgba(56, 189, 248, 0.4); }
+    50% { box-shadow: 0 4px 24px rgba(56, 189, 248, 0.75); }
+}
+
+.toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(30, 41, 59, 0.95);
+    border: 1px solid #38bdf8;
+    color: #f8fafc;
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 2000;
+    max-width: 90%;
+    text-align: center;
+    white-space: pre-line;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}

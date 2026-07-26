@@ -1,0 +1,56 @@
+body {
+    background-color: #0f172a; /* ダークネイビー */
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: #f8fafc;
+}
+
+h1 {
+  color: #74cdf3;
+  font-size: 30px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+  letter-spacing: 5px;
+}
+
+.input-app {
+  justify-content: space-between;
+  background-color: #1e293b;
+  width: 100%;
+  max-width: 50%;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.weight-input,.distance-input,.runtime-input,.cost-input {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#input {
+  font-size: 130%;
+}
+
+.input-label {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+#simulation {
+  justify-content: center;
+  background-color: bisque;
+  color: black;
+  cursor: pointer;
+  padding: 5px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
