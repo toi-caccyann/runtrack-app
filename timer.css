@@ -193,8 +193,11 @@ button {
 /* timer.css の一番最後に追加してください */
 @media (max-width: 480px) {
     body {
-        padding: 75px 10px 20px 10px; /* 上下にヘッダー分の余白、左右に10pxの隙間 */
+        /* 上：ヘッダー分、下：下部タブバー分の余白を確保、左右に10pxの隙間 */
+        padding: 75px 10px calc(20px + 76px + env(safe-area-inset-bottom)) 10px;
         box-sizing: border-box;
+        /* 画面が低い端末だとcenter配置のまま縦に溢れるとヘッダー/タブバーに重なるため、上詰めにする */
+        justify-content: flex-start;
     }
     .tracker-app {
         max-width: 100%;  /* スマホの時は70%ではなく画面幅いっぱいにする */

@@ -101,3 +101,10 @@ h1 {
 .nav-links a:hover {
     color: #38bdf8; /* マウスを乗せると青くなる */
 }
+
+/* スマホでは下部タブバーが被らないよう余白を足す */
+@media (max-width: 480px) {
+    body {
+        padding-bottom: calc(20px + 76px + env(safe-area-inset-bottom));
+    }
+}

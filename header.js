@@ -48,8 +48,8 @@ function highlightCurrentPage() {
     // いま開いているファイルのURL（例: "/timer.html"）を取得
     const path = window.location.pathname;
 
-    // ヘッダー内のリンク（aタグ）をすべて取得
-    const navLinks = document.querySelectorAll('.header-nav a');
+    // ヘッダー内のリンク（aタグ）をすべて取得（上部ナビ・下部タブバー共通）
+    const navLinks = document.querySelectorAll('.nav-link');
 
     navLinks.forEach(link => {
         // リンク先（例: "timer.html"）を取得

@@ -40,29 +40,6 @@ body {
         margin-right: 5px;
     }
 
-    /* ナビゲーションのリンク同士の間隔を狭くする */
-    .header-nav {
-        gap: 2px; 
-        flex: 1;
-        justify-content: flex-start;
-        overflow-x: auto;              /* 画面に収まらない分は横スクロールできるように */
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;         /* Firefoxでスクロールバーを隠す */
-    }
-
-    /* Chrome/Safariでスクロールバーを隠す */
-    .header-nav::-webkit-scrollbar {
-        display: none;
-    }
-
-    /* 各メニューボタンの文字サイズと余白をスマホ用に最適化 */
-    .header-nav a {
-        font-size: 11px;      /* 文字を少し小さく */
-        padding: 6px 6px;     /* 左右の余白を詰める */
-        border-radius: 6px;
-        white-space: nowrap;  /* 絶対に途中で改行させない */
-        flex-shrink: 0;       /* スクロール領域内でリンクが潰れて読めなくなるのを防ぐ */
-    }
 }
 
 /* ==========================================
@@ -119,6 +96,61 @@ body {
 .header-nav a.active {
     color: #0f172a;
     background-color: #38bdf8;
+}
+
+/* 下部タブバー（スマホ幅でのみ表示。PC/タブレットでは非表示） */
+.bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #1e293b;
+    border-top: 1px solid #334155;
+    padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+    z-index: 1000;
+}
+
+.bottom-nav a.nav-link {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 11px;
+    padding: 4px 0;
+    border-radius: 8px;
+}
+
+.bottom-nav-icon {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.bottom-nav a.nav-link.active {
+    color: #38bdf8;
+}
+
+/* スマホでは上部の横並びナビを隠し、下部タブバーに一本化する
+   （このファイル冒頭の.header-nav/.bottom-navの基本ルールより後ろに置くことで
+   　cascadeの優先順位（後勝ち）を確実に上書きする） */
+@media (max-width: 480px) {
+    .header-nav {
+        display: none;
+    }
+
+    .bottom-nav {
+        display: flex;
+    }
+
+    /* 下部タブバーの高さ(実測60px)＋余白＋セーフエリア分、コンテンツが隠れないようにする */
+    body {
+        padding-bottom: calc(76px + env(safe-area-inset-bottom));
+    }
 }
 
 /* ==========================================
