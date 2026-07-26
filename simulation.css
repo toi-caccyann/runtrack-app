@@ -48,9 +48,17 @@ h1 {
 
 #simulation {
   justify-content: center;
-  background-color: bisque;
-  color: black;
+  background-color: #38bdf8;
+  color: #0f172a;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
-  padding: 5px;
+  padding: 14px;
+  transition: background-color 0.2s;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+#simulation:hover {
+  background-color: #0ea5e9;
 }

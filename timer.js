@@ -234,7 +234,8 @@ saveBtn.addEventListener('click', () => {
         date: new Date().toLocaleDateString(), // 💡今日の日付（例: 2026/6/20）を自動取得
         time: timeString,
         distance: currentDistance,
-        speed: currentSpeed
+        speed: currentSpeed,
+        timestamp: Date.now() // 週間グラフの日付集計用（date文字列はロケール依存で解析しづらいため）
     };
 
     // 2. スマホの物置から、すでに保存されている「過去の履歴リスト」を取り出す
@@ -268,8 +269,8 @@ StorageBtn.addEventListener('click', () => {
                 // ③ 履歴がある場合：ループ処理（forEach）を使って、1件ずつHTMLのカードを組み立てる
                 historyList.forEach((record, index) => {
                     const recordHtml = `
-                        <div style="background-color: #bdebfd; padding: 12px; margin-bottom: 10px; border-radius: 8px; border-left: 4px solid #323fb6; font-size: 14px; color: black">
-                            <strong style="color: #000000;">📅 ${record.date} (NO.${historyList.length - index})</strong><br>
+                        <div style="background-color: #334155; padding: 12px; margin-bottom: 10px; border-radius: 8px; border-left: 4px solid #38bdf8; font-size: 14px; color: #f8fafc">
+                            <strong style="color: #ffffff;">📅 ${record.date} (NO.${historyList.length - index})</strong><br>
                             ⏱️ 時間: ${record.time} | 🏃‍♂️ 距離: ${record.distance} | ⚡ 速度: ${record.speed}
                         </div>
                     `;

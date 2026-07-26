@@ -54,7 +54,17 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 5. データの自動反映：④ 累計実績の計算
+    // 5. データの自動反映：④ 週間の走行距離グラフ（直近7日間）
+    // ==========================================
+    const weeklyChartElem = document.getElementById('weekly-chart');
+    const weeklyChartTotalElem = document.getElementById('weekly-chart-total');
+
+    if (weeklyChartElem) {
+        renderWeeklyChart(weeklyChartElem, weeklyChartTotalElem, historyList);
+    }
+
+    // ==========================================
+    // 6. データの自動反映：⑤ 累計実績の計算(全期間)
     // ==========================================
     const totalDistanceElem = document.getElementById('total-distance');
 
@@ -75,7 +85,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // 6. データの自動反映：⑤ 直近の履歴（3件だけ抽出）
+    // 7. データの自動反映：⑥ 直近の履歴（3件だけ抽出）
     // ==========================================
     const homeHistoryList = document.getElementById('home-history-list');
 
@@ -109,4 +119,77 @@ function animateCount(el, endValue, suffix = '', duration = 800) {
         if (progress < 1) requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
+}
+
+// 履歴から「直近7日間、各日の合計走行距離」を集計する
+// ※ record.date（toLocaleDateStringの文字列）はロケール依存で解析が不安定なため、
+//   timer.js側で保存しているrecord.timestamp（Unix time）を使う。
+//   timestampを持たない古い記録（この機能追加前に保存された記録）は集計対象外になる。
+function getWeeklyDistances(historyList) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const days = [];
+    for (let i = 6; i >= 0; i--) {
+        const day = new Date(today);
+        day.setDate(day.getDate() - i);
+        days.push({ date: day, total: 0 });
+    }
+
+    historyList.forEach(record => {
+        if (typeof record.timestamp !== 'number') return;
+
+        const recordDay = new Date(record.timestamp);
+        recordDay.setHours(0, 0, 0, 0);
+
+        const bucket = days.find(d => d.date.getTime() === recordDay.getTime());
+        if (bucket) {
+            const kmNum = parseFloat(record.distance);
+            if (!isNaN(kmNum)) {
+                bucket.total += kmNum;
+            }
+        }
+    });
+
+    return days;
+}
+
+// 週間グラフを描画する（棒グラフ：直近7日間の1日ごとの合計距離）
+function renderWeeklyChart(container, totalElem, historyList) {
+    const WEEKDAY_LABELS = ['日', '月', '火', '水', '木', '金', '土'];
+    const days = getWeeklyDistances(historyList);
+    const maxValue = Math.max(...days.map(d => d.total), 0.1); // 0除算を避けるための下限
+    const todayStr = new Date().toDateString();
+
+    container.innerHTML = '';
+
+    days.forEach(day => {
+        const isToday = day.date.toDateString() === todayStr;
+
+        const col = document.createElement('div');
+        col.className = 'weekly-chart-col';
+
+        const track = document.createElement('div');
+        track.className = 'weekly-chart-bar-track';
+
+        const bar = document.createElement('div');
+        bar.className = 'weekly-chart-bar' + (isToday ? ' is-today' : '');
+        const heightPercent = day.total > 0 ? Math.max((day.total / maxValue) * 100, 4) : 0;
+        bar.style.height = `${heightPercent}%`;
+        bar.title = `${day.date.getMonth() + 1}/${day.date.getDate()}（${WEEKDAY_LABELS[day.date.getDay()]}）: ${day.total.toFixed(2)} km`;
+
+        const label = document.createElement('span');
+        label.className = 'weekly-chart-label' + (isToday ? ' is-today' : '');
+        label.textContent = WEEKDAY_LABELS[day.date.getDay()];
+
+        track.appendChild(bar);
+        col.appendChild(track);
+        col.appendChild(label);
+        container.appendChild(col);
+    });
+
+    if (totalElem) {
+        const weekTotal = days.reduce((sum, d) => sum + d.total, 0);
+        totalElem.textContent = `${weekTotal.toFixed(2)} km`;
+    }
 }
