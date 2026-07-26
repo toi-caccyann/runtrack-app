@@ -24,6 +24,15 @@ window.addEventListener('DOMContentLoaded', () => {
         });
 });
 
+// PWA化：Service Workerを登録して、オフラインでも画面が表示できるようにする
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js').catch((error) => {
+            console.error('Service Workerの登録に失敗しました:', error);
+        });
+    });
+}
+
 // 現在のURLを見て、一致するメニューに「active」クラスを付与する職人技
 function highlightCurrentPage() {
     // いま開いているファイルのURL（例: "/timer.html"）を取得

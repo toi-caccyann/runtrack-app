@@ -49,6 +49,16 @@ module.exports = [
     },
   },
   {
+    // Service Worker実行環境のグローバル（windowやdocumentは存在しない）
+    files: ['service-worker.js'],
+    languageOptions: {
+      globals: {
+        self: 'readonly',
+        caches: 'readonly',
+      },
+    },
+  },
+  {
     files: ['eslint.config.js'],
     languageOptions: {
       sourceType: 'commonjs',
