@@ -1,5 +1,5 @@
 // オフラインでもアプリの見た目が表示されるように、静的ファイルをキャッシュする
-const CACHE_NAME = 'runtrack-cache-v2';
+const CACHE_NAME = 'runtrack-cache-v3';
 const PRECACHE_URLS = [
   './',
   './index.html',
@@ -40,20 +40,20 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// キャッシュ優先、なければネットワークから取得してキャッシュに追加する
+// ネットワーク優先：オンライン時は常に最新版を取得し、取得できた分をキャッシュに保存する。
+// オフライン時（fetch失敗時）だけキャッシュから返す。
+// ※以前は「キャッシュ優先」だったため、CSS/JSを更新してもCACHE_NAMEを上げ忘れると
+//   ブラウザが古いファイルを配信し続けてしまう問題があった。
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(event.request)
-        .then((response) => {
-          const responseClone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone));
-          return response;
-        })
-        .catch(() => cached);
-    })
+    fetch(event.request)
+      .then((response) => {
+        const responseClone = response.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone));
+        return response;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
