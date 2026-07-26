@@ -1,19 +1,74 @@
 /* ==========================================
+   🎛️ 0. デザイントークン（全ページ共通）
+   ========================================== */
+:root {
+    /* ベースカラー（ニュートラル） */
+    --color-bg: #0b1220;
+    --color-surface: #161f36;          /* カード・モーダルの基本サーフェス */
+    --color-surface-deep: #0d1526;     /* 総計ボックスなど、一段沈んだ面 */
+    --color-surface-elevated: #212c47; /* セカンダリボタン・ホバーなど、一段浮いた面 */
+    --color-border: #2a3752;
+    --color-border-soft: rgba(148, 163, 184, 0.14);
+
+    /* テキスト */
+    --color-text: #f1f5f9;
+    --color-text-strong: #ffffff;
+    --color-text-muted: #94a3b8;
+    --color-text-faint: #64748b;
+
+    /* アクセント（水色1色に統一） */
+    --color-accent: #38bdf8;
+    --color-accent-hover: #0ea5e9;
+    --color-accent-soft: #7dd3fc;
+    --color-accent-ink: #071827;       /* アクセント背景に乗せる濃色文字 */
+    --color-accent-glow: rgba(56, 189, 248, 0.35);
+
+    /* ステータス */
+    --color-danger: #ef4444;
+    --color-danger-hover: #dc2626;
+
+    /* 角丸スケール */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-pill: 999px;
+
+    /* 余白スケール */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+
+    /* 影 */
+    --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.25);
+    --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.35);
+    --shadow-glow: 0 4px 20px var(--color-accent-glow);
+
+    /* タイポグラフィ（Webフォントを読み込まず、各OSのモダンなUIフォントを使う） */
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI Variable", "Segoe UI",
+        "Hiragino Kaku Gothic ProN", "Noto Sans JP", Roboto, sans-serif;
+}
+
+/* ==========================================
    🎨 1. 全体共通のスタイル（ベース）
    ========================================== */
 body {
-    background-color: #0f172a; /* 落ち着いたダークネイビー */
-    color: #f8fafc;            /* ほぼ白に近いグレー（目に優しい） */
-    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
     margin: 0;
     padding: 0;
     padding-top: 75px; /* ヘッダーが上部に固定されるため、その分の余白 */
     overflow-x: hidden;
     width: 100vw;
-     background: 
-        radial-gradient(circle at 20% 20%, rgba(56,189,248,0.15), transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(129,140,248,0.12), transparent 45%),
-        #0f172a;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.14), transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(56, 189, 248, 0.08), transparent 45%),
+        var(--color-bg);
     background-size: 200% 200%;
     animation: bgFloat 18s ease-in-out infinite;
 }
@@ -29,7 +84,7 @@ body {
 @media (max-width: 480px) {
     /* ヘッダー全体の左右の余白を少し削る */
     .app-header {
-        padding: 0 8px;
+        padding: 0 var(--space-2);
         height: 55px;
     }
 
@@ -37,7 +92,7 @@ body {
     .header-logo {
         font-size: 14px;
         letter-spacing: -0.5px;
-        margin-right: 5px;
+        margin-right: var(--space-1);
     }
 
 }
@@ -51,51 +106,51 @@ body {
     left: 0;
     width: 100%;
     height: 60px;
-    background-color: rgba(30, 41, 59, 0.7);
+    background-color: rgba(22, 31, 54, 0.75);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 var(--space-5);
     box-sizing: border-box;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-sm);
     z-index: 1000; /* 他の要素より常に手前に表示 */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+    border-bottom: 1px solid var(--color-border-soft);
 }
 
 .header-logo {
     font-size: 20px;
     font-weight: bold;
-    color: #38bdf8; /* アクセントブルー */
+    color: var(--color-accent);
     letter-spacing: 1px;
 }
 
 .header-nav {
     display: flex;
-    gap: 15px;
+    gap: var(--space-4);
 }
 
 .header-nav a {
-    color: #94a3b8; /* 落ち着いたグレー */
+    color: var(--color-text-muted);
     text-decoration: none;
     font-size: 14px;
     font-weight: bold;
-    padding: 6px 12px;
-    border-radius: 6px;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
     transition: all 0.2s;
 }
 
 /* マウスが乗ったとき */
 .header-nav a:hover {
-    color: #38bdf8;
-    background-color: #334155;
+    color: var(--color-accent);
+    background-color: var(--color-surface-elevated);
 }
 
 /* いま開いているページのメニューを目立たせる */
 .header-nav a.active {
-    color: #0f172a;
-    background-color: #38bdf8;
+    color: var(--color-accent-ink);
+    background-color: var(--color-accent);
 }
 
 /* 下部タブバー（スマホ幅でのみ表示。PC/タブレットでは非表示） */
@@ -106,9 +161,9 @@ body {
     left: 0;
     width: 100%;
     box-sizing: border-box;
-    background-color: #1e293b;
-    border-top: 1px solid #334155;
-    padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+    background-color: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-2) var(--space-1) calc(var(--space-2) + env(safe-area-inset-bottom));
     z-index: 1000;
 }
 
@@ -119,11 +174,11 @@ body {
     align-items: center;
     justify-content: center;
     gap: 2px;
-    color: #94a3b8;
+    color: var(--color-text-muted);
     text-decoration: none;
     font-size: 11px;
-    padding: 4px 0;
-    border-radius: 8px;
+    padding: var(--space-1) 0;
+    border-radius: var(--radius-sm);
 }
 
 .bottom-nav-icon {
@@ -137,7 +192,7 @@ body {
 }
 
 .bottom-nav a.nav-link.active {
-    color: #38bdf8;
+    color: var(--color-accent);
 }
 
 /* スマホでは上部の横並びナビを隠し、下部タブバーに一本化する
@@ -164,21 +219,21 @@ body {
 .home-container {
     max-width: 600px; /* スマホやPCで見やすい幅に制限 */
     margin: 0 auto;
-    padding: 20px;
+    padding: var(--space-5);
 }
 
 /* 各セクションの間隔 */
 section {
-    margin-bottom: 30px;
+    margin-bottom: var(--space-8);
 }
 
 /* セクションのタイトル（h2） */
 section h2 {
     font-size: 16px;
-    color: #94a3b8;
-    margin-bottom: 12px;
-    padding-left: 8px;
-    border-left: 4px solid #38bdf8; /* 左側に青いアクセント線 */
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-3);
+    padding-left: var(--space-2);
+    border-left: 4px solid var(--color-accent);
 }
 
 /* ==========================================
@@ -186,41 +241,41 @@ section h2 {
    ========================================== */
 .welcome-section {
     text-align: center;
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-    padding: 30px 20px;
-    border-radius: 16px;
-    border: 1px solid #334155;
+    background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-bg) 100%);
+    padding: var(--space-8) var(--space-5);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-border);
 }
 
 #welcome-message {
     font-size: 24px;
-    margin: 0 0 8px 0;
-    color: #ffffff;
+    margin: 0 0 var(--space-2) 0;
+    color: var(--color-text-strong);
 }
 
 .motivational-text {
     font-size: 14px;
-    color: #94a3b8;
-    margin: 0 0 25px 0;
+    color: var(--color-text-muted);
+    margin: 0 0 var(--space-6) 0;
 }
 
 /* 今すぐ計測を始めるボタン */
 .start-dash-btn {
     display: inline-block;
-    background-color: #38bdf8;
-    color: #0f172a;
+    background-color: var(--color-accent);
+    color: var(--color-accent-ink);
     text-decoration: none;
     font-size: 16px;
     font-weight: bold;
-    padding: 16px 32px;
-    border-radius: 30px; /* 丸みを持たせてスポーツアプリ感を演出 */
-    box-shadow: 0 4px 14px rgba(56, 189, 248, 0.4);
+    padding: var(--space-4) var(--space-8);
+    border-radius: var(--radius-pill); /* 丸みを持たせてスポーツアプリ感を演出 */
+    box-shadow: var(--shadow-glow);
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .start-dash-btn:hover {
     transform: translateY(-2px); /* 少し上に浮き上がるアニメーション */
-    box-shadow: 0 6px 20px rgba(56, 189, 248, 0.6);
+    box-shadow: 0 6px 24px var(--color-accent-glow);
 }
 
 /* ==========================================
@@ -229,7 +284,7 @@ section h2 {
 .dashboard-grid {
     display: grid;
     grid-template-columns: 1fr 1fr; /* 綺麗に2分割 */
-    gap: 15px;
+    gap: var(--space-4);
 }
 
 /* スマホなど画面が狭いときは縦並びにする */
@@ -240,38 +295,38 @@ section h2 {
 }
 
 .info-card {
-    background-color: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 12px;
-    padding: 20px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
 }
 
-.info-card, .total-box, #home-history-list, .profile-app, .input-app, .tracker-app {
-    background-color: rgba(30, 41, 59, 0.6);
+.info-card, .total-box, #home-history-list, .profile-app, .input-app, .tracker-app, .weekly-chart-card, .result-card {
+    background-color: rgba(22, 31, 54, 0.65);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    transition: transform 0.25s cubic-bezier(.2,.8,.2,1), box-shadow 0.25s ease, border-color 0.25s ease;
+    transition: transform 0.25s cubic-bezier(.2, .8, .2, 1), box-shadow 0.25s ease, border-color 0.25s ease;
     animation: fadeUp 0.5s ease both;
 }
 
 .info-card:hover, .total-box:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 24px -8px rgba(56,189,248,0.25);
-    border-color: rgba(56,189,248,0.4);
+    box-shadow: 0 12px 24px -8px var(--color-accent-glow);
+    border-color: var(--color-accent-glow);
 }
 
 .info-card h2 {
     font-size: 14px;
-    color: #94a3b8;
-    margin: 0 0 15px 0;
+    color: var(--color-text-muted);
+    margin: 0 0 var(--space-4) 0;
     padding: 0;
     border: none;
 }
 
 /* 未来予測カード（目立たせる） */
 .highlight-card {
-    border-color: #38bdf8;
-    background: linear-gradient(to bottom right, #1e293b, #111e35);
+    border-color: var(--color-accent);
+    background: linear-gradient(to bottom right, var(--color-surface), var(--color-surface-deep));
 }
 
 .dashboard-grid .info-card:nth-child(1) { animation-delay: 0.05s; }
@@ -285,62 +340,64 @@ section h2 {
 }
 
 .stat-item {
-    margin-bottom: 12px;
+    margin-bottom: var(--space-3);
 }
 
 .stat-label {
     display: block;
     font-size: 12px;
-    color: #64748b;
+    color: var(--color-text-faint);
     margin-bottom: 2px;
 }
 
 .stat-value {
     font-size: 20px;
     font-weight: bold;
-    color: #ffffff;
+    color: var(--color-text-strong);
+    font-variant-numeric: tabular-nums;
 }
 
 .stat-value small {
     font-size: 12px;
-    color: #94a3b8;
+    color: var(--color-text-muted);
     margin-left: 2px;
 }
 
 .card-footer-text {
     font-size: 10px;
-    color: #64748b;
-    margin: 10px 0 0 0;
+    color: var(--color-text-faint);
+    margin: var(--space-3) 0 0 0;
 }
 
 /* ==========================================
    📈 週間の走行距離グラフ
    ========================================== */
 .weekly-chart-card {
-    background-color: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 12px;
-    padding: 20px 16px 14px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5) var(--space-4) var(--space-3);
 }
 
 .weekly-chart-total {
-    margin: 0 0 14px 0;
+    margin: 0 0 var(--space-3) 0;
     font-size: 13px;
-    color: #94a3b8;
+    color: var(--color-text-muted);
 }
 
 .weekly-chart-total strong {
-    color: #f8fafc;
+    color: var(--color-text);
     font-size: 15px;
+    font-variant-numeric: tabular-nums;
 }
 
 .weekly-chart {
     display: flex;
     align-items: stretch;
     justify-content: space-between;
-    gap: 6px;
+    gap: var(--space-2);
     height: 110px;
-    border-bottom: 1px solid #334155; /* グラフのベースライン */
+    border-bottom: 1px solid var(--color-border); /* グラフのベースライン */
 }
 
 .weekly-chart-col {
@@ -349,7 +406,7 @@ section h2 {
     align-items: center;
     justify-content: flex-end;
     flex: 1;
-    gap: 6px;
+    gap: var(--space-2);
     min-width: 0;
 }
 
@@ -365,23 +422,23 @@ section h2 {
     width: 100%;
     max-width: 24px;
     min-height: 2px;
-    background-color: #38bdf8;
+    background-color: var(--color-accent);
     border-radius: 4px 4px 0 0;
     transition: height 0.4s ease;
 }
 
 .weekly-chart-bar.is-today {
-    background-color: #7dd3fc;
+    background-color: var(--color-accent-soft);
 }
 
 .weekly-chart-label {
     font-size: 11px;
-    color: #64748b;
-    padding-bottom: 6px;
+    color: var(--color-text-faint);
+    padding-bottom: var(--space-2);
 }
 
 .weekly-chart-label.is-today {
-    color: #38bdf8;
+    color: var(--color-accent);
     font-weight: bold;
 }
 
@@ -391,45 +448,46 @@ section h2 {
 .stats-total-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    gap: var(--space-4);
 }
 
 .total-box {
-    background-color: #111827; /* より深い黒に近い背景 */
-    border: 1px solid #1e293b;
-    border-radius: 12px;
-    padding: 15px;
+    background-color: var(--color-surface-deep);
+    border: 1px solid var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
     text-align: center;
 }
 
 .total-label {
     display: block;
     font-size: 12px;
-    color: #94a3b8;
-    margin-bottom: 5px;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-1);
 }
 
 .total-value {
     font-size: 22px;
     font-weight: bold;
-    color: #ffffff;
+    color: var(--color-text-strong);
+    font-variant-numeric: tabular-nums;
 }
 
 /* ==========================================
    📋 7. 最近の履歴
    ========================================== */
 #home-history-list {
-    background-color: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 12px;
-    padding: 15px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
 }
 
 .empty-message {
     font-size: 14px;
-    color: #64748b;
+    color: var(--color-text-faint);
     text-align: center;
-    margin: 10px 0;
+    margin: var(--space-3) 0;
 }
 
 .stat-value.updated, .total-value.updated {
@@ -437,7 +495,7 @@ section h2 {
 }
 @keyframes pop {
     0% { transform: scale(1); }
-    40% { transform: scale(1.15); color: #38bdf8; }
+    40% { transform: scale(1.15); color: var(--color-accent); }
     100% { transform: scale(1); }
 }
 
@@ -445,22 +503,17 @@ section h2 {
 .start-dash-btn, #save-profile-btn, #simulation, button {
     position: relative;
     overflow: hidden;
+    font-family: var(--font-sans);
 }
 
 .start-dash-btn::after, #save-profile-btn::after, #simulation::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle, rgba(255,255,255,0.35) 0%, transparent 60%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.35) 0%, transparent 60%);
     opacity: 0;
     transform: scale(0.5);
     transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.start-dash-btn:active::after, #save-profile-btn:active::after, #simulation:active::after {
-    opacity: 1;
-    transform: scale(1.5);
-    transition: 0s;
 }
 
 .start-dash-btn:active::after, #save-profile-btn:active::after, #simulation:active::after {
@@ -473,8 +526,8 @@ section h2 {
     animation: glowPulse 2.5s ease-in-out infinite;
 }
 @keyframes glowPulse {
-    0%, 100% { box-shadow: 0 4px 14px rgba(56, 189, 248, 0.4); }
-    50% { box-shadow: 0 4px 24px rgba(56, 189, 248, 0.75); }
+    0%, 100% { box-shadow: var(--shadow-glow); }
+    50% { box-shadow: 0 4px 28px var(--color-accent-glow); }
 }
 
 .toast {
@@ -482,13 +535,13 @@ section h2 {
     bottom: 24px;
     left: 50%;
     transform: translateX(-50%) translateY(20px);
-    background: rgba(30, 41, 59, 0.95);
-    border: 1px solid #38bdf8;
-    color: #f8fafc;
-    padding: 14px 20px;
-    border-radius: 12px;
+    background: rgba(22, 31, 54, 0.95);
+    border: 1px solid var(--color-accent);
+    color: var(--color-text);
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-lg);
     font-size: 14px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    box-shadow: var(--shadow-md);
     opacity: 0;
     transition: opacity 0.3s ease, transform 0.3s ease;
     z-index: 2000;
@@ -507,16 +560,16 @@ section h2 {
    ========================================== */
 .app-footer {
     text-align: center;
-    padding: 24px 20px;
+    padding: var(--space-6) var(--space-5);
     font-size: 12px;
 }
 
 .app-footer a {
-    color: #64748b;
+    color: var(--color-text-faint);
     text-decoration: none;
 }
 
 .app-footer a:hover {
-    color: #38bdf8;
+    color: var(--color-accent);
     text-decoration: underline;
 }

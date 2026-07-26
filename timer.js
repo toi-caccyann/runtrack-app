@@ -269,8 +269,8 @@ StorageBtn.addEventListener('click', () => {
                 // ③ 履歴がある場合：ループ処理（forEach）を使って、1件ずつHTMLのカードを組み立てる
                 historyList.forEach((record, index) => {
                     const recordHtml = `
-                        <div style="background-color: #334155; padding: 12px; margin-bottom: 10px; border-radius: 8px; border-left: 4px solid #38bdf8; font-size: 14px; color: #f8fafc">
-                            <strong style="color: #ffffff;">📅 ${record.date} (NO.${historyList.length - index})</strong><br>
+                        <div style="background-color: var(--color-surface-elevated); padding: 12px; margin-bottom: 10px; border-radius: var(--radius-sm); border-left: 4px solid var(--color-accent); font-size: 14px; color: var(--color-text)">
+                            <strong style="color: var(--color-text-strong);">📅 ${record.date} (NO.${historyList.length - index})</strong><br>
                             ⏱️ 時間: ${record.time} | 🏃‍♂️ 距離: ${record.distance} | ⚡ 速度: ${record.speed}
                         </div>
                     `;

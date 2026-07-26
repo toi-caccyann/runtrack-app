@@ -1,43 +1,34 @@
-/* 全体の背景（ダークモード風） */
-body {
-    background-color: #0f172a; /* 濃いネイビー */
-    color: #f8fafc;            /* ほぼ白に近いグレー */
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-}
-
 /* アプリのカード外枠 */
 .profile-app {
-    background-color: #1e293b; /* 少し明るいネイビー */
     width: 100%;
     max-width: 400px;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    margin: 0 auto;
+    padding: var(--space-8);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-border);
 }
 
 /* メインタイトル */
-h1 {
-    font-size: 24px;
+.profile-app h1 {
+    font-size: 22px;
     text-align: center;
-    margin-bottom: 25px;
-    color: #38bdf8; /* アクセントカラーの爽やかなブルー */
+    margin: 0 0 var(--space-6);
+    color: var(--color-accent);
+    letter-spacing: 0.5px;
 }
 
 /* 入力欄のグループ */
 .input-group {
-    margin-bottom: 20px;
+    margin-bottom: var(--space-5);
 }
 
 /* ラベル（項目名） */
 .input-group label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: var(--space-2);
     font-size: 14px;
-    color: #94a3b8; /* 薄いグレー */
+    color: var(--color-text-muted);
     font-weight: bold;
 }
 
@@ -45,66 +36,54 @@ h1 {
 .input-group input,
 .input-group select {
     width: 100%;
-    padding: 12px;
-    background-color: #0f172a; /* 背景をさらに濃く */
-    border: 1px solid #334155;
-    border-radius: 8px;
-    color: white;
+    padding: var(--space-3);
+    background-color: var(--color-surface-deep);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text);
     font-size: 16px;
     box-sizing: border-box; /* paddingを含めたサイズ計算 */
     outline: none;
+    transition: border-color 0.2s;
 }
 
 /* 入力欄にフォーカスが当たったとき（クリックしたとき） */
 .input-group input:focus,
 .input-group select:focus {
-    border-color: #38bdf8; /* 枠線を青く光らせる */
+    border-color: var(--color-accent);
 }
 
 /* 保存ボタン */
 #save-profile-btn {
     width: 100%;
-    padding: 14px;
-    background-color: #38bdf8; /* 青色 */
-    color: #0f172a;            /* 文字は濃いネイビー */
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background-color 0.2s;
+    background-color: var(--color-accent);
+    color: var(--color-accent-ink);
+    border-radius: var(--radius-sm);
+    margin-top: var(--space-2);
 }
 
 /* 保存ボタンにマウスが乗ったとき */
 #save-profile-btn:hover {
-    background-color: #0ea5e9; /* 少し濃い青に */
+    background-color: var(--color-accent-hover);
 }
 
 /* ページ移動リンクのエリア */
 .nav-links {
-    margin-top: 25px;
+    margin-top: var(--space-6);
     display: flex;
     justify-content: space-between;
-    border-top: 1px solid #334155;
-    padding-top: 15px;
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-4);
 }
 
 /* リンクの文字 */
 .nav-links a {
-    color: #94a3b8;
+    color: var(--color-text-muted);
     text-decoration: none;
     font-size: 14px;
     transition: color 0.2s;
 }
 
 .nav-links a:hover {
-    color: #38bdf8; /* マウスを乗せると青くなる */
-}
-
-/* スマホでは下部タブバーが被らないよう余白を足す */
-@media (max-width: 480px) {
-    body {
-        padding-bottom: calc(20px + 76px + env(safe-area-inset-bottom));
-    }
+    color: var(--color-accent);
 }
