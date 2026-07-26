@@ -1,28 +1,38 @@
 window.addEventListener('DOMContentLoaded', () => {
     // 1. 各HTMLに用意した「header-area」を連れてくる
     const headerArea = document.getElementById('header-area');
-    
-    if (!headerArea) return; // もし枠がなければ処理を終了
 
-    // 2. fetchを使って、外にある header.html を読み込む
-    fetch('header.html')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('ヘッダーファイルの読み込みに失敗しました');
-            }
-            return response.text(); // 読み込んだ中身をテキスト（HTML文字列）に変換
-        })
-        .then(data => {
-            // 3. 変換したHTMLを枠の中にガチャンと流し込む！
-            headerArea.innerHTML = data;
+    if (headerArea) {
+        // 2. fetchを使って、外にある header.html を読み込む
+        fetch('header.html')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('ヘッダーファイルの読み込みに失敗しました');
+                }
+                return response.text(); // 読み込んだ中身をテキスト（HTML文字列）に変換
+            })
+            .then(data => {
+                // 3. 変換したHTMLを枠の中にガチャンと流し込む！
+                headerArea.innerHTML = data;
 
-            // 4. 【おまけの職人技】いま開いているページに応じて、メニューに「active」クラスをつける
-            highlightCurrentPage();
-        })
-        .catch(error => {
-            console.error('エラー:', error);
-        });
+                // 4. 【おまけの職人技】いま開いているページに応じて、メニューに「active」クラスをつける
+                highlightCurrentPage();
+            })
+            .catch(error => {
+                console.error('エラー:', error);
+            });
+    }
+
+    renderFooter();
 });
+
+// 全ページ共通のフッター（プライバシーポリシーへの導線）を末尾に追加する
+function renderFooter() {
+    const footer = document.createElement('footer');
+    footer.className = 'app-footer';
+    footer.innerHTML = '<a href="privacy.html">プライバシーポリシー</a>';
+    document.body.appendChild(footer);
+}
 
 // PWA化：Service Workerを登録して、オフラインでも画面が表示できるようにする
 if ('serviceWorker' in navigator) {

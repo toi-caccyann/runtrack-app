@@ -1,5 +1,5 @@
 // オフラインでもアプリの見た目が表示されるように、静的ファイルをキャッシュする
-const CACHE_NAME = 'runtrack-cache-v1';
+const CACHE_NAME = 'runtrack-cache-v2';
 const PRECACHE_URLS = [
   './',
   './index.html',
@@ -17,6 +17,8 @@ const PRECACHE_URLS = [
   './timer.css',
   './timer.html',
   './timer.js',
+  './privacy.html',
+  './privacy.css',
   './manifest.json',
   './icons/icon-192.png',
   './icons/icon-512.png',

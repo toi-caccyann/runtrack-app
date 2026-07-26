@@ -392,3 +392,22 @@ section h2 {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
 }
+
+/* ==========================================
+   🔗 8. 共通フッター
+   ========================================== */
+.app-footer {
+    text-align: center;
+    padding: 24px 20px;
+    font-size: 12px;
+}
+
+.app-footer a {
+    color: #64748b;
+    text-decoration: none;
+}
+
+.app-footer a:hover {
+    color: #38bdf8;
+    text-decoration: underline;
+}
