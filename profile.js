@@ -37,12 +37,12 @@ saveProfileBtn.addEventListener('click', () => {
         return;
     };
 
-//保存するためのオブジェクトを作る
+//保存するためのオブジェクトを作る（age/heightは未入力可のためNaNならnullにしておく）
   const userProfile = {
     nickname: nickname,
     gender: gender,
-    age: age,
-    height: height,
+    age: isNaN(age) ? null : age,
+    height: isNaN(height) ? null : height,
     weight: weight
   };
 

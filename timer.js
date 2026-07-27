@@ -84,8 +84,7 @@ function handlePositionError(error) {
 startBtn.addEventListener('click', () => {
     
     if (timerId !== null) {
-        return; 
-         document.querySelector('.tracker-app').classList.add('is-recording');
+        return;
     }
 
    // 「今この瞬間の時刻」から「すでに走った分の秒数」を引き算してスタート時刻を決定します
@@ -264,18 +263,40 @@ StorageBtn.addEventListener('click', () => {
 
             // ② もし履歴が1件もなかったら、メッセージを出す
             if (historyList.length === 0) {
-                logArea.innerHTML = '<p class="empty-message">保存された記録はまだありません。</p>';
+                const emptyMessage = document.createElement('p');
+                emptyMessage.className = 'empty-message';
+                emptyMessage.textContent = '保存された記録はまだありません。';
+                logArea.appendChild(emptyMessage);
             } else {
-                // ③ 履歴がある場合：ループ処理（forEach）を使って、1件ずつHTMLのカードを組み立てる
+                // ③ 履歴がある場合：ループ処理（forEach）を使って、1件ずつカードを組み立てる
+                // record内の値をそのままHTML化しないよう、textContentでDOMを組み立てる（XSS対策）
+                // アイコン部分だけはheader.jsのcreateIcon()で生成した固定のSVGを使う
                 historyList.forEach((record, index) => {
-                    const recordHtml = `
-                        <div style="background-color: var(--color-surface-elevated); padding: 12px; margin-bottom: 10px; border-radius: var(--radius-sm); border-left: 4px solid var(--color-accent); font-size: 14px; color: var(--color-text)">
-                            <strong style="color: var(--color-text-strong);">📅 ${record.date} (NO.${historyList.length - index})</strong><br>
-                            ⏱️ 時間: ${record.time} | 🏃‍♂️ 距離: ${record.distance} | ⚡ 速度: ${record.speed}
-                        </div>
-                    `;
-                    // 組み立てたHTMLを、エリアにどんどん注ぎ込んでいく
-                    logArea.innerHTML = logArea.innerHTML + recordHtml;
+                    const card = document.createElement('div');
+                    card.className = 'history-card';
+
+                    const dateEl = document.createElement('strong');
+                    dateEl.className = 'history-card-date';
+                    dateEl.appendChild(createIcon('calendar'));
+                    dateEl.appendChild(document.createTextNode(`${record.date} (NO.${historyList.length - index})`));
+
+                    const metaEl = document.createElement('div');
+                    metaEl.className = 'history-card-meta';
+                    [
+                        ['stopwatch', `時間: ${record.time}`],
+                        ['route', `距離: ${record.distance}`],
+                        ['bolt', `速度: ${record.speed}`],
+                    ].forEach(([iconName, text]) => {
+                        const item = document.createElement('span');
+                        item.className = 'history-icon-item';
+                        item.appendChild(createIcon(iconName));
+                        item.appendChild(document.createTextNode(text));
+                        metaEl.appendChild(item);
+                    });
+
+                    card.appendChild(dateEl);
+                    card.appendChild(metaEl);
+                    logArea.appendChild(card);
                 });
             }
 

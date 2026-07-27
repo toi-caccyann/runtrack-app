@@ -96,13 +96,14 @@ button {
     background-color: var(--color-accent-hover);
 }
 
-/* ストップは「計測中」を止める操作なので、記録中インジケーターと同じ危険色系に */
+/* ストップは「計測中」を止める操作なので、記録中インジケーターと同じ危険色系に
+   （--color-dangerだと白文字とのコントラスト比がAA未達のため、少し暗めの--color-danger-hoverを使う） */
 #stop-btn {
-    background-color: var(--color-danger);
+    background-color: var(--color-danger-hover);
     color: white;
 }
 #stop-btn:hover {
-    background-color: var(--color-danger-hover);
+    background-color: var(--color-danger-strong);
 }
 
 /* リセットボタン（副次アクション） */

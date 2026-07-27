@@ -64,6 +64,57 @@ function highlightCurrentPage() {
     });
 }
 
+// 履歴カードなどで使う小さなSVGアイコンの定義。
+// home.js/timer.jsは履歴データ（record）をtextContentで描画するが、
+// アイコン部分だけはこの固定データからDOM APIで組み立てる（innerHTMLは使わない）。
+const SVG_NS = 'http://www.w3.org/2000/svg';
+const ICON_DEFS = {
+    calendar: { fill: 'none', children: [
+        { tag: 'rect', attrs: { x: 3, y: 4, width: 18, height: 17, rx: 2 } },
+        { tag: 'path', attrs: { d: 'M3 9h18' } },
+        { tag: 'path', attrs: { d: 'M8 2v4M16 2v4' } },
+    ] },
+    stopwatch: { fill: 'none', children: [
+        { tag: 'line', attrs: { x1: 9, y1: 2, x2: 15, y2: 2 } },
+        { tag: 'line', attrs: { x1: 12, y1: 2, x2: 12, y2: 5 } },
+        { tag: 'circle', attrs: { cx: 12, cy: 14, r: 8 } },
+        { tag: 'line', attrs: { x1: 12, y1: 14, x2: 12, y2: 10 } },
+        { tag: 'line', attrs: { x1: 12, y1: 14, x2: 15, y2: 15.5 } },
+    ] },
+    route: { fill: 'none', children: [
+        { tag: 'path', attrs: { d: 'M12 21c-4-4.5-7-8-7-11.5A7 7 0 0 1 19 9.5C19 13 16 16.5 12 21z' } },
+        { tag: 'circle', attrs: { cx: 12, cy: 9.5, r: 2.5 } },
+    ] },
+    bolt: { fill: 'currentColor', children: [
+        { tag: 'path', attrs: { d: 'M13 2 4 14h6l-1 8 9-12h-6z' } },
+    ] },
+};
+
+/* exported createIcon */
+function createIcon(name) {
+    const def = ICON_DEFS[name];
+    if (!def) return null;
+
+    const svg = document.createElementNS(SVG_NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('fill', def.fill);
+    svg.setAttribute('aria-hidden', 'true');
+    if (def.fill === 'none') {
+        svg.setAttribute('stroke', 'currentColor');
+        svg.setAttribute('stroke-width', '2');
+        svg.setAttribute('stroke-linecap', 'round');
+        svg.setAttribute('stroke-linejoin', 'round');
+    }
+
+    def.children.forEach((child) => {
+        const el = document.createElementNS(SVG_NS, child.tag);
+        Object.entries(child.attrs).forEach(([key, value]) => el.setAttribute(key, value));
+        svg.appendChild(el);
+    });
+
+    return svg;
+}
+
 // alert()の代わりに使える簡易トースト
 /* exported showToast */
 function showToast(message, duration = 2500) {

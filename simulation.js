@@ -1,5 +1,5 @@
 const weightInput = document.getElementById('weight-input');
-const runTimeInput = document.getElementById('runtime-input');
+const runtimeInput = document.getElementById('runtime-input');
 const distanceInput = document.getElementById('distance-input');
 const simulationBtn = document.getElementById('simulation');
 
@@ -8,19 +8,15 @@ const calorieResult = document.getElementById('calorie-result');
 
 // 画面が開いた瞬間に実行する
 window.addEventListener('DOMContentLoaded', () => {
-    
+
     // 1. 物置から最新の1件（lastRunData）を取り出す
     const savedRunData = JSON.parse(localStorage.getItem('lastRunData'));
-    
+
     // 2. データが存在していたら、シミュレーターの入力欄に自動でセットする
     if (savedRunData) {
-        // ※HTMLのinputタグの id 名と完全に一致させてください
-        const distanceInput = document.getElementById('distance-input');
-        const runtimeInput = document.getElementById('runtime-input');
-        
         if (distanceInput) distanceInput.value = savedRunData.distance;
         if (runtimeInput) runtimeInput.value = savedRunData.runtime;
-        
+
         console.log("タイマーからの最新データを自動反映しました！", savedRunData);
     }
 });
@@ -29,12 +25,12 @@ simulationBtn.addEventListener('click', () => {
 
 // ボタンが押されたら値を取り出す
 let weight = parseFloat(weightInput.value); // 小数点対応の数値に変換
-let minutes = parseFloat(runTimeInput.value);
+let minutes = parseFloat(runtimeInput.value);
 let distance = parseFloat(distanceInput.value);
 
 //もし入力が空（NaN）なら計算しない
 if (isNaN(weight) || isNaN(minutes) || isNaN(distance)) {
-  alert("すべての項目に数値を入力してください");
+  showToast("すべての項目に数値を入力してください");
   return; // ここで処理を終了
 
 }

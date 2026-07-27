@@ -46,6 +46,8 @@ self.addEventListener('activate', (event) => {
 //   ブラウザが古いファイルを配信し続けてしまう問題があった。
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
+  // 外部オリジン（将来のAdSenseスクリプト等）はキャッシュ対象にせず、素通りさせる。
+  if (new URL(event.request.url).origin !== self.location.origin) return;
 
   event.respondWith(
     fetch(event.request)

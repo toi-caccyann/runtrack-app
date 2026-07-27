@@ -40,11 +40,20 @@ module.exports = [
     },
   },
   {
-    // profile.js/timer.js は header.js が先に読み込まれる前提で showToast を使う
-    files: ['profile.js', 'timer.js'],
+    // profile.js/timer.js/simulation.js は header.js が先に読み込まれる前提で showToast を使う
+    files: ['profile.js', 'timer.js', 'simulation.js'],
     languageOptions: {
       globals: {
         showToast: 'readonly',
+      },
+    },
+  },
+  {
+    // home.js/timer.js は header.js が先に読み込まれる前提で createIcon（履歴カードのSVGアイコン生成）を使う
+    files: ['home.js', 'timer.js'],
+    languageOptions: {
+      globals: {
+        createIcon: 'readonly',
       },
     },
   },
@@ -55,6 +64,7 @@ module.exports = [
       globals: {
         self: 'readonly',
         caches: 'readonly',
+        URL: 'readonly',
       },
     },
   },

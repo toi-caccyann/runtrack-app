@@ -96,14 +96,34 @@ window.addEventListener('DOMContentLoaded', () => {
         // 配列の先頭から最大3件だけを取り出す（sliceを使用）
         const recentRuns = historyList.slice(0, 3);
 
+        // record内の値をそのままHTML化しないよう、textContentでDOMを組み立てる（XSS対策）
+        // アイコン部分だけはheader.jsのcreateIcon()で生成した固定のSVGを使う
         recentRuns.forEach((record) => {
-            const recordHtml = `
-                <div style="background-color: var(--color-surface-elevated); padding: 12px; margin-bottom: 10px; border-radius: var(--radius-sm); border-left: 4px solid var(--color-accent); font-size: 13px;">
-                    <strong style="color: var(--color-text-strong);">📅 ${record.date}</strong><br>
-                    ⏱️ ${record.time} | 🏃‍♂️ ${record.distance} | ⚡ ${record.speed}
-                </div>
-            `;
-            homeHistoryList.innerHTML += recordHtml;
+            const card = document.createElement('div');
+            card.className = 'history-card history-card-compact';
+
+            const dateEl = document.createElement('strong');
+            dateEl.className = 'history-card-date';
+            dateEl.appendChild(createIcon('calendar'));
+            dateEl.appendChild(document.createTextNode(record.date));
+
+            const metaEl = document.createElement('div');
+            metaEl.className = 'history-card-meta';
+            [
+                ['stopwatch', record.time],
+                ['route', record.distance],
+                ['bolt', record.speed],
+            ].forEach(([iconName, text]) => {
+                const item = document.createElement('span');
+                item.className = 'history-icon-item';
+                item.appendChild(createIcon(iconName));
+                item.appendChild(document.createTextNode(text));
+                metaEl.appendChild(item);
+            });
+
+            card.appendChild(dateEl);
+            card.appendChild(metaEl);
+            homeHistoryList.appendChild(card);
         });
     }
 });
